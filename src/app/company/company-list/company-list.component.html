@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+  </tr>
+  @for(company of companies; track company) {
+    <tr>
+      <td>{{ company.name }}</td>
+      <td>{{ company.email }} </td>
+      <td>{{ company.phone }}</td>
+    </tr>
+  }
+  @empty {
+    <tr>
+      <td colspan="3">No companies found</td>
+    </tr>
+  }
+</table>
