@@ -20,6 +20,12 @@ export class CompanyService {
     );
   }
 
+  addCompany(company: Company):  Observable<Company> {
+    return this.httpClient.post<Company>(`${this.API_BASE}/company`, company).pipe(
+      catchError(this.errorHandler<Company>),
+    );
+  }
+
   deleteCompany(companyId: number): Observable<Company> {
     console.log('service - delete company', companyId)
     return this.httpClient.delete<Company>(`${this.API_BASE}/company/${companyId}`).pipe(

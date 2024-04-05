@@ -1,1 +1,42 @@
-<p>company-edit works!</p>
+<form [formGroup]="companyForm">
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" name="name" formControlName="name">
+
+    <div class="alert alert-danger" *ngIf="companyForm.get('name')?.hasError('required') && companyForm.get('name')?.touched">
+      Name is required
+    </div>
+
+    <div class="alert alert-danger" *ngIf="companyForm.get('name')?.hasError('minlength') && companyForm.get('name')?.touched">
+      Name needs to be {{ companyForm.get('name')?.getError('minlength').requiredLength }} characters long
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" name="email" formControlName="email">
+
+    <div class="alert alert-danger" *ngIf="companyForm.get('email')?.hasError('required') && companyForm.get('email')?.touched">
+      Email is required
+    </div>
+
+    <div class="alert alert-danger" *ngIf="companyForm.get('email')?.hasError('email') && companyForm.get('email')?.touched">
+      Email needs to be an email address
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="text" class="form-control" name="phone" formControlName="phone">
+  </div>
+
+  <div class="form-group pt-4">
+    <button type="button" class="btn btn-primary"
+      [disabled]="companyForm.invalid"
+      (click)="saveCompany()">
+      Submit
+    </button>
+  </div>
+
+</form>
