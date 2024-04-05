@@ -1,9 +1,12 @@
 <nav class="navbar navbar-light bg-faded">
   <div class="container-fluid">
     <a class="navbar-brand">FireBootCamp CRM</a>
-    <ul class="navbar-nav ml-auto flex-row">
+    <ul class="navbar-nav ml-auto flex-row pe-2">
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/company/list']">Companies ({{ companyCount$ | async }})</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/admin']">Admin</a>
       </li>
     </ul>
   </div>
