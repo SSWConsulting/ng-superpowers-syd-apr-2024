@@ -26,9 +26,18 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" name="checkPhone" formControlName="checkPhone">
+    <label class="form-check-label" for="checkPhone">Add phone number</label>
+  </div>
+
+  <div class="form-group" [ngClass]="{ 'visually-hidden': !companyForm.get('checkPhone')?.value }">
     <label for="phone">Phone</label>
     <input type="text" class="form-control" name="phone" formControlName="phone">
+
+    <div class="alert alert-danger" *ngIf="companyForm.get('phone')?.hasError('required') && companyForm.get('phone')?.touched">
+      Phone number is required
+    </div>
   </div>
 
   <div class="form-group pt-4">
