@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Company } from './company';
 import { HttpClient } from '@angular/common/http';
-import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  catchError,
-  delay,
-  tap,
-} from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -17,24 +10,12 @@ import { environment } from '../../environments/environment';
 export class CompanyService {
   private readonly API_BASE = environment.API_BASE;
 
-  private companies$ = new BehaviorSubject<Company[]>([]);
-
-  constructor(private readonly httpClient: HttpClient) {
-    this.loadCompanies();
-  }
-
-  private loadCompanies(): void {
-    this.httpClient
-      .get<Company[]>(`${this.API_BASE}/company`)
-      .pipe(
-        tap(() => console.log('loadCompanies - call API')),
-        catchError(this.errorHandler<Company[]>)
-      )
-      .subscribe((companies) => this.companies$.next(companies));
-  }
+  constructor(private readonly httpClient: HttpClient) {}
 
   getCompanies(): Observable<Company[]> {
-    return this.companies$;
+    return this.httpClient
+      .get<Company[]>(`${this.API_BASE}/company`)
+      .pipe(catchError(this.errorHandler<Company[]>));
   }
 
   getCompany(companyId: number): Observable<Company> {
@@ -46,28 +27,19 @@ export class CompanyService {
   addCompany(company: Company): Observable<Company> {
     return this.httpClient
       .post<Company>(`${this.API_BASE}/company`, company)
-      .pipe(
-        catchError(this.errorHandler<Company>),
-        tap(() => this.loadCompanies())
-      );
+      .pipe(catchError(this.errorHandler<Company>));
   }
 
   updateCompany(company: Company): Observable<Company> {
     return this.httpClient
       .put<Company>(`${this.API_BASE}/company/${company.id}`, company)
-      .pipe(
-        catchError(this.errorHandler<Company>),
-        tap(() => this.loadCompanies())
-      );
+      .pipe(catchError(this.errorHandler<Company>));
   }
 
   deleteCompany(companyId: number): Observable<Company> {
     return this.httpClient
       .delete<Company>(`${this.API_BASE}/company/${companyId}`)
-      .pipe(
-        catchError(this.errorHandler<Company>),
-        tap(() => this.loadCompanies())
-      );
+      .pipe(catchError(this.errorHandler<Company>));
   }
 
   // 1. use http interceptor and move this logic to a global handler
