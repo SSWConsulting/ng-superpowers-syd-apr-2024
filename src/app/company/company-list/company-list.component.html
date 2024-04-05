@@ -20,7 +20,7 @@
       <td>{{ company.phone }}</td>
       <td class="company-actions">
         <button class="btn btn-primary">Edit</button>
-        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-danger" (click)="companyDeleted(company)">Delete</button>
       </td>
     </tr>
     } @empty {
