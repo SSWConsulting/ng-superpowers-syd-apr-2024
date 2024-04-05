@@ -9,13 +9,13 @@ import {
   delay,
   tap,
 } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CompanyService {
-  private readonly API_BASE =
-    'https://app-fbc-crm-api-prod.azurewebsites.net/api';
+  private readonly API_BASE = environment.API_BASE;
 
   private companies$ = new BehaviorSubject<Company[]>([]);
 
