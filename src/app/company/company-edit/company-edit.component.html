@@ -35,7 +35,7 @@
     <button type="button" class="btn btn-primary"
       [disabled]="companyForm.invalid"
       (click)="saveCompany()">
-      Submit
+      {{ isNewCompany ? 'Add' : 'Update '}}
     </button>
   </div>
 
