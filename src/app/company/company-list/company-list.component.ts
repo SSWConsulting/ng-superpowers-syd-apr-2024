@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Company } from '../company';
 import { CompanyService } from '../company.service';
+import { Observable, finalize } from 'rxjs';
 
 @Component({
   selector: 'fbc-company-list',
@@ -9,7 +10,9 @@ import { CompanyService } from '../company.service';
 })
 export class CompanyListComponent implements OnInit {
 
-  companies: Company[] = [];
+  companies$ = this.companyService.getCompanies().pipe(
+    finalize(() => console.log('Get companies - finalized'))
+  );
 
   constructor(
     private readonly companyService: CompanyService,
@@ -17,6 +20,6 @@ export class CompanyListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.companyService.getCompanies().subscribe(companies => this.companies = companies);
+
   }
 }
